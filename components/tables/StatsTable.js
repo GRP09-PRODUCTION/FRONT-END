@@ -52,6 +52,7 @@ function StatsTable({ data, selectedRaceHandler }) {
 					keyExtractor={(item) => item._id}
 					ListHeaderComponent={0}
 					ListFooterComponent={0}
+					scrollEnabled={false}
 				/></View>
 
 		</View>
