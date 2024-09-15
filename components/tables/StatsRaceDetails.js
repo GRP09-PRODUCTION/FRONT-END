@@ -22,7 +22,7 @@ function StatsRaceDetails({ data }) {
 					<Text style={styles.cellText}>Date de début</Text>
 				</View>
 				<View style={[styles.cell, styles.valueCell]}>{ /* One cell within the row */}
-					<Text style={styles.cellText}>{new Date(data.start_at).toLocaleString()}</Text>
+					<Text style={styles.cellText}>{data.start_at ? new Date(data.start_at).toLocaleString() : "Aucune donée"}</Text>
 				</View>
 			</View>
 
@@ -31,7 +31,7 @@ function StatsRaceDetails({ data }) {
 					<Text style={styles.cellText}>Date de fin</Text>
 				</View>
 				<View style={[styles.cell, styles.valueCell]}>
-					<Text style={styles.cellText}>{new Date(data.end_at).toLocaleString()}</Text>
+					<Text style={styles.cellText}>{data.end_at ? new Date(data.end_at).toLocaleString() : "Aucune donnée"}</Text>
 				</View>
 			</View>
 
@@ -40,7 +40,7 @@ function StatsRaceDetails({ data }) {
 					<Text style={styles.cellText}>Durée</Text>
 				</View>
 				<View style={[styles.cell, styles.valueCell]}>
-					<Text style={styles.cellText}>{data.duration}</Text>
+					<Text style={styles.cellText}>{data.duration || "0"}</Text>
 				</View>
 			</View>
 
@@ -49,7 +49,7 @@ function StatsRaceDetails({ data }) {
 					<Text style={styles.cellText}>Vitesse max</Text>
 				</View>
 				<View style={[styles.cell, styles.valueCell]}>
-					<Text style={styles.cellText}>{data.v_max} m/s</Text>
+					<Text style={styles.cellText}>{data.v_max || "0"} m/s</Text>
 				</View>
 			</View>
 
@@ -58,7 +58,7 @@ function StatsRaceDetails({ data }) {
 					<Text style={styles.cellText}>Vitesse min</Text>
 				</View>
 				<View style={[styles.cell, styles.valueCell]}>
-					<Text style={styles.cellText}>{data.v_min}m/s</Text>
+					<Text style={styles.cellText}>{data.v_min || "0"} m/s</Text>
 				</View>
 			</View>
 
@@ -67,7 +67,7 @@ function StatsRaceDetails({ data }) {
 					<Text style={styles.cellText}>Vitesse moyenne</Text>
 				</View>
 				<View style={[styles.cell, styles.valueCell]}>
-					<Text style={styles.cellText}>{data.v_moyen}m/s</Text>
+					<Text style={styles.cellText}>{data.v_moyen || "0"} m/s</Text>
 				</View>
 			</View>
 
@@ -76,7 +76,7 @@ function StatsRaceDetails({ data }) {
 					<Text style={styles.cellText}>Mode</Text>
 				</View>
 				<View style={[styles.cell, styles.valueCell]}>
-					<Text style={styles.cellText}>{data.mode}</Text>
+					<Text style={styles.cellText}>{data.mode || "Aucun"}</Text>
 				</View>
 			</View>
 

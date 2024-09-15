@@ -76,7 +76,7 @@ function StatsScreen({ navigation }) {
   	const authCtx = useContext(AuthContext);
 	// fake data we will need to get in some other way
 	const fakeManualRaceNumber = racesList.length;
-	const fakeAutoRaceNumber = new Date(selectedRaceData.start_at).toDateString();
+	const fakeAutoRaceNumber = data.start_at ? new Date(selectedRaceData.start_at).toDateString() : "Selectionnez une course";
 
 	// end of fake data
 
