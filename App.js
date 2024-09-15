@@ -33,8 +33,6 @@ function AuthStack() {
       <Stack.Screen name="Game" component={GameScreen} />
 	  <Stack.Screen name="InGameMenu" component={InGameMenuScreen} />
       <Stack.Screen name="GameEndMenu" component={GameEndMenuScreen} />
-      <Stack.Screen name="Stats" component={StatsScreen} />
-      <Stack.Screen name="Settings" component={SettingsScreen} />
 	  {/* In fine, les paramètres ne seront accessibles que si l'on est connecté. Ce lien va donc disparaitre. */}
     </Stack.Navigator>
   );
