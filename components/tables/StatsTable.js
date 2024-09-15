@@ -1,38 +1,36 @@
 import { StyleSheet, Text, View } from "react-native";
 import { Colors, Sizes } from "../../constants/styles";
-import { FlatList } from "react-native-web";
+import { FlatList } from "react-native";
 
 
-function divisionEuclidienne(divided, divider)
-{
+function divisionEuclidienne(divided, divider) {
 	var quotient = 0;
 	var rest;
-	while (divided >= divider)
-	{
+	while (divided >= divider) {
 		quotient += 1;
 		divided -= divider;
 	}
 	rest = divided;
-	return {minutes: quotient, seconds: rest};
+	return { minutes: quotient, seconds: rest };
 }
 
 function StatsTable({ data, selectedRaceHandler }) {
 
 	const renderItem = ({ item }) => (
 		<View style={styles.row}>
-				<View style={[styles.cell, styles.valueCell]}>
-					<Text onPress={() => {selectedRaceHandler(item._id)}} style={styles.cellText}>{new Date(item.start_at).toLocaleDateString()}</Text>
-					
-				</View>
-				<View style={[styles.cell, styles.valueCell]}>
-					<Text style={styles.cellText}>{new Date(item.start_at).toLocaleTimeString()}</Text>
-				</View>
-				<View style={[styles.cell, styles.valueCell]}>
-					<Text style={styles.cellText}>{item.duration} s</Text>
-				</View>
+			<View style={[styles.cell, styles.valueCell]}>
+				<Text onPress={() => { selectedRaceHandler(item._id) }} style={styles.cellText}>{new Date(item.start_at).toLocaleDateString()}</Text>
+
 			</View>
-	  );
-	
+			<View style={[styles.cell, styles.valueCell]}>
+				<Text style={styles.cellText}>{new Date(item.start_at).toLocaleTimeString()}</Text>
+			</View>
+			<View style={[styles.cell, styles.valueCell]}>
+				<Text style={styles.cellText}>{item.duration} s</Text>
+			</View>
+		</View>
+	);
+
 	return (
 		<View style={styles.tableContainer}>{ /* Table container */}
 			<View style={styles.row}>{ /* One row */}
@@ -47,11 +45,15 @@ function StatsTable({ data, selectedRaceHandler }) {
 				</View>
 			</View>
 
-			<FlatList
-      data={data}
-      renderItem={renderItem}
-      keyExtractor={(item) => item._id}
-    />
+			<View style={styles.row}>
+				<FlatList
+					data={data}
+					renderItem={renderItem}
+					keyExtractor={(item) => item._id}
+					ListHeaderComponent={0}
+					ListFooterComponent={0}
+				/></View>
+
 		</View>
 	);
 }
@@ -63,24 +65,24 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 	},
-	row: { 
-		flexDirection: 'row' 
+	row: {
+		flexDirection: 'row'
 	},
-	cell: { 
+	cell: {
 		padding: Sizes.XS,
 		width: '33.3%',
 	},
-	voidCell: { 
+	voidCell: {
 		opacity: 0,
 	},
-	titleCell: { 
+	titleCell: {
 		opacity: 1,
 		backgroundColor: Colors.primary800,
 		borderStyle: 'solid',
 		borderWidth: 1,
 		borderColor: Colors.primary800,
 	},
-	valueCell: { 
+	valueCell: {
 		opacity: 1,
 		borderStyle: 'solid',
 		borderWidth: 1,
