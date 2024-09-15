@@ -1,5 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import { Colors, Sizes } from "../../constants/styles";
+import { FlatList } from "react-native-web";
+
 
 function divisionEuclidienne(divided, divider)
 {
@@ -14,55 +16,42 @@ function divisionEuclidienne(divided, divider)
 	return {minutes: quotient, seconds: rest};
 }
 
-function StatsTable({ data }) {
+function StatsTable({ data, selectedRaceHandler }) {
+
+	const renderItem = ({ item }) => (
+		<View style={styles.row}>
+				<View style={[styles.cell, styles.valueCell]}>
+					<Text onPress={() => {selectedRaceHandler(item._id)}} style={styles.cellText}>{new Date(item.start_at).toLocaleDateString()}</Text>
+					
+				</View>
+				<View style={[styles.cell, styles.valueCell]}>
+					<Text style={styles.cellText}>{new Date(item.start_at).toLocaleTimeString()}</Text>
+				</View>
+				<View style={[styles.cell, styles.valueCell]}>
+					<Text style={styles.cellText}>{item.duration} s</Text>
+				</View>
+			</View>
+	  );
 	
 	return (
 		<View style={styles.tableContainer}>{ /* Table container */}
 			<View style={styles.row}>{ /* One row */}
-				<View style={[styles.cell, styles.voidCell]}>{ /* One cell within the row */}
-					<Text style={styles.cellText}></Text>
+				<View style={[styles.cell, styles.titleCell]}>{ /* One cell within the row */}
+					<Text style={styles.cellText}>Date</Text>
 				</View>
 				<View style={[styles.cell, styles.titleCell]}>
-					<Text style={styles.cellText}>Moyenne</Text>
+					<Text style={styles.cellText}>Heure</Text>
 				</View>
 				<View style={[styles.cell, styles.titleCell]}>
-					<Text style={styles.cellText}>Record</Text>
+					<Text style={styles.cellText}>Durée</Text>
 				</View>
 			</View>
-			<View style={styles.row}>
-				<View style={[styles.cell, styles.titleCell]}>
-					<Text style={styles.cellText}>Vitesse moyenne</Text>
-				</View>
-				<View style={[styles.cell, styles.valueCell]}>
-					<Text style={styles.cellText}>{data._id} m/s</Text>
-				</View>
-				<View style={[styles.cell, styles.valueCell]}>
-					<Text style={styles.cellText}>{data.v_max} m/s</Text>
-				</View>
-			</View>
-			<View style={styles.row}>
-				<View style={[styles.cell, styles.titleCell]}>
-					<Text style={styles.cellText}>Vitesse maximale</Text>
-				</View>
-				<View style={[styles.cell, styles.valueCell]}>
-					<Text style={styles.cellText}>{data.v_max} m/s</Text>
-				</View>
-				<View style={[styles.cell, styles.valueCell]}>
-					<Text style={styles.cellText}>{data.v_max} m/s</Text>
-				</View>
-			</View>
-			<View style={styles.row}>
-				<View style={[styles.cell, styles.titleCell]}>
-					<Text style={styles.cellText}>Durée de la course</Text>
-				</View>
-				<View style={[styles.cell, styles.valueCell]}>
-					<Text style={styles.cellText}>min  s</Text>
-				</View>
-				<View style={[styles.cell, styles.valueCell]}>
-					<Text style={styles.cellText}>min  s</Text>
-				</View>
-			</View>
-			
+
+			<FlatList
+      data={data}
+      renderItem={renderItem}
+      keyExtractor={(item) => item._id}
+    />
 		</View>
 	);
 }

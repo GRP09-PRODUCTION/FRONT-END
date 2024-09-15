@@ -4,25 +4,25 @@ import { StyleSheet, Text, View, ImageBackground, SafeAreaView, ScrollView } fro
 import IconButton from "../components/ui/IconButton";
 import { AuthContext } from "../store/authContext";
 import StatsTable from "../components/tables/StatsTable";
+import StatsRaceDetails from "../components/tables/StatsRaceDetails";
 import { Colors, Sizes, FullMenuStyles } from "../constants/styles";
-import { getRaceList } from "../util/auth";
+import { getRaceList, getRace } from "../util/auth";
 import { ERROR_MESSAGES, SUCCESS_MESSAGES } from "../constants/messages";
-import { FlatList } from "react-native-web";
 
 function StatsScreen({ navigation }) {
 	const [isGettingRaceList, setIsGettingRaceList] = useState(false);
 	const [message, setMessage] = useState("");
 	const [error, setError] = useState(null);
 	const [racesList, setRacesList] = useState([]);
+	const [selectedRaceData, setSelectedRaceData] = useState([]);
+
 
 	async function raceListHandler() {
 		//setIsAuthenticating(true);
 		try {
 		  const data = await getRaceList();
 		  setRacesList(data.payload.races);
-		  console.log(racesList);
 		  
-		  const token = data.payload.token;	
 		  const successMessage =
 			SUCCESS_MESSAGES[data.message] || "List récupérée avec succès !";
 		  setMessage(successMessage);
@@ -39,35 +39,45 @@ function StatsScreen({ navigation }) {
 		} 
 	  }
 
+	  async function selectedRaceHandler(raceId) {
+		//setIsAuthenticating(true);
+		try {
+			console.log("ok");
+			console.log(raceId);
+			
+			
+		  const data = await getRace(raceId);
+		  console.log(data);
+
+		  setSelectedRaceData(data.payload.race);
+		  console.log(data);
+		  
+		  
+		  const successMessage =
+			SUCCESS_MESSAGES[data.message] || "Cours récupérée avec succès !";
+		  setMessage(successMessage);
+		} catch (error) {
+		  let errorMessage;
+	
+		  if (error?.data?.message) {
+			errorMessage = ERROR_MESSAGES[error.data.message] || "Impossible de récupérer la cours, veuillez réessayer plus tard !";
+		  } else {
+			errorMessage =
+			  "Impossible de récupérer la cours, veuillez réessayer plus tard !";
+		  }
+		  setError(errorMessage);
+		} 
+	  }
+
 	useEffect(() => {
 		raceListHandler();
 	}, []);
 
-	const renderItem = ({ item }) => (
-		<View style={styles.item}>
-		  <Text>{item._id}</Text>
-		</View>
-	  );
-
   	const authCtx = useContext(AuthContext);
 	// fake data we will need to get in some other way
-	const fakeManualRaceNumber = 6;
-	const fakeAutoRaceNumber = 7;
-	const fakeFinishedAutoRaceNumber = 5;
-	const fakeData = {
-		average: {
-			averageSpeed: 42,
-			highestSpeed: 61,
-			raceTime: 100,
-			hitCount: 5,
-		},
-		best: {
-			averageSpeed: 48,
-			highestSpeed: 67,
-			raceTime: 72,
-			hitCount: 1,
-		}
-	};
+	const fakeManualRaceNumber = racesList.length;
+	const fakeAutoRaceNumber = new Date(selectedRaceData.start_at).toDateString();
+
 	// end of fake data
 
 	return (
@@ -87,15 +97,16 @@ function StatsScreen({ navigation }) {
 		 						/>
 		 					</View>
 		 					<Text style={[FullMenuStyles.title]}>Statistiques</Text>
-		 					<Text style={[FullMenuStyles.subTitle, styles.subTitle]}>Mode manuel</Text>
+		 					<Text style={[FullMenuStyles.subTitle, styles.subTitle]}>Liste des courses</Text>
 		 					<Text style={styles.text}>{fakeManualRaceNumber} courses effectuées</Text>
 		 					<StatsTable
 		 						data={racesList}
+								 selectedRaceHandler={selectedRaceHandler}
 		 					/>
-		 					<Text style={[FullMenuStyles.subTitle, styles.subTitle]}>Mode automatique</Text>
-		 					<Text style={styles.text}>{fakeFinishedAutoRaceNumber} courses terminées sur {fakeAutoRaceNumber} effectuées</Text>
-		 					<StatsTable
-		 						data={racesList}
+		 					<Text style={[FullMenuStyles.subTitle, styles.subTitle]}>Détail de la course</Text>
+		 					<Text style={styles.text}>Courses effectuée le {fakeAutoRaceNumber}</Text>
+		 					<StatsRaceDetails
+		 						data={selectedRaceData}
 		 					/>
 		 				</View>
 		 			</ScrollView>

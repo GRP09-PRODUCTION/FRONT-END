@@ -133,3 +133,37 @@ export async function getRaceList(){
 
   return data;
 }
+
+export async function getRace(raceId){
+
+  const token = await AsyncStorage.getItem("token"); 
+
+  const body = {
+    raceId,
+  };
+
+  console.log(body);
+  
+
+  const response = await fetch(`${url}api/race/details`, {
+    method: "POST",
+    headers: { 
+      "Content-type": "application/json",
+      Authorization: token,
+      body: JSON.stringify(raceId),
+    }
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    const error = new Error(
+      data.message ||
+        "Une erreur est survenue lors de la récuparation de la course. Veuillez réessayer plus tard!"
+    );
+    error.data = data;
+    throw error;
+  }
+
+  return data;
+}
