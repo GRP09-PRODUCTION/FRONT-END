@@ -150,8 +150,8 @@ export async function getRace(raceId){
     headers: { 
       "Content-type": "application/json",
       Authorization: token,
-      body: JSON.stringify(raceId),
-    }
+    },
+    body: JSON.stringify(body)
   });
 
   const data = await response.json();
