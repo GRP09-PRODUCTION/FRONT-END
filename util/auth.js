@@ -110,3 +110,28 @@ export async function endGame(vMin, vMax, startAt, endAt, duration, mode){
 
   return data;
 }
+
+export async function getRaceList(){
+  const token = await AsyncStorage.getItem("token"); 
+
+  const response = await fetch(`${url}api/race/list`, {
+    method: "GET",
+    headers: { 
+      "Content-type": "application/json",
+      Authorization: token,
+    }
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    const error = new Error(
+      data.message ||
+        "Une erreur est survenue lors de la récuparation de la liste des courses. Veuillez réessayer plus tard!"
+    );
+    error.data = data;
+    throw error;
+  }
+
+  return data;
+}

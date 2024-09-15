@@ -15,12 +15,7 @@ function divisionEuclidienne(divided, divider)
 }
 
 function StatsTable({ data }) {
-	const averageTimeDivision = divisionEuclidienne(data.average.raceTime, 60);
-	const averageTimeMinutes = averageTimeDivision.minutes;
-	const averageTimeSeconds = averageTimeDivision.seconds;
-	const bestTimeDivision = divisionEuclidienne(data.best.raceTime, 60);
-	const bestTimeMinutes = bestTimeDivision.minutes;
-	const bestTimeSeconds = bestTimeDivision.seconds;
+	
 	return (
 		<View style={styles.tableContainer}>{ /* Table container */}
 			<View style={styles.row}>{ /* One row */}
@@ -39,10 +34,10 @@ function StatsTable({ data }) {
 					<Text style={styles.cellText}>Vitesse moyenne</Text>
 				</View>
 				<View style={[styles.cell, styles.valueCell]}>
-					<Text style={styles.cellText}>{data.average.averageSpeed} m/h</Text>
+					<Text style={styles.cellText}>{data._id} m/s</Text>
 				</View>
 				<View style={[styles.cell, styles.valueCell]}>
-					<Text style={styles.cellText}>{data.best.averageSpeed} m/h</Text>
+					<Text style={styles.cellText}>{data.v_max} m/s</Text>
 				</View>
 			</View>
 			<View style={styles.row}>
@@ -50,10 +45,10 @@ function StatsTable({ data }) {
 					<Text style={styles.cellText}>Vitesse maximale</Text>
 				</View>
 				<View style={[styles.cell, styles.valueCell]}>
-					<Text style={styles.cellText}>{data.average.highestSpeed} m/h</Text>
+					<Text style={styles.cellText}>{data.v_max} m/s</Text>
 				</View>
 				<View style={[styles.cell, styles.valueCell]}>
-					<Text style={styles.cellText}>{data.best.highestSpeed} m/h</Text>
+					<Text style={styles.cellText}>{data.v_max} m/s</Text>
 				</View>
 			</View>
 			<View style={styles.row}>
@@ -61,23 +56,13 @@ function StatsTable({ data }) {
 					<Text style={styles.cellText}>Durée de la course</Text>
 				</View>
 				<View style={[styles.cell, styles.valueCell]}>
-					<Text style={styles.cellText}>{averageTimeMinutes}min {averageTimeSeconds} s</Text>
+					<Text style={styles.cellText}>min  s</Text>
 				</View>
 				<View style={[styles.cell, styles.valueCell]}>
-					<Text style={styles.cellText}>{bestTimeMinutes}min {bestTimeSeconds} s</Text>
+					<Text style={styles.cellText}>min  s</Text>
 				</View>
 			</View>
-			<View style={styles.row}>
-				<View style={[styles.cell, styles.titleCell]}>
-					<Text style={styles.cellText}>Nombre de chocs</Text>
-				</View>
-				<View style={[styles.cell, styles.valueCell]}>
-					<Text style={styles.cellText}>{data.average.hitCount} </Text>
-				</View>
-				<View style={[styles.cell, styles.valueCell]}>
-					<Text style={styles.cellText}>{data.best.hitCount} </Text>
-				</View>
-			</View>
+			
 		</View>
 	);
 }
