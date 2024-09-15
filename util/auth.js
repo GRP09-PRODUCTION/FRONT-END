@@ -97,8 +97,6 @@ export async function endGame(vMin, vMax, startAt, endAt, duration, mode){
 
   const data = await response.json();
 
-  console.log(data)
-
   if (!response.ok) {
     const error = new Error(
       data.message ||
