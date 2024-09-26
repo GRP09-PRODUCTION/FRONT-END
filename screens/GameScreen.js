@@ -189,7 +189,7 @@ function GameScreen({ navigation, route }) {
   };
 
   const handleAutoActivate = () => {
-    if (socket && socket.readyState === WebSocket.OPEN && isLoading === false) {
+    if (socket && socket.readyState === WebSocket.OPEN) {
       const now = new Date();
       const startAt = now.toISOString();
       setStartAt(startAt);
